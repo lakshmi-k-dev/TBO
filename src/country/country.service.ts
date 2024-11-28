@@ -292,13 +292,19 @@ export class CountryStatusService {
       
       const result = await this.hotelDetailsModel.findOne().exec();
     }
+
+    async getCityListFromDB(): Promise<CityStatus[]> {
+      return this.cityStatusModel.find().exec();
+    }
+
+    async getCountryListFromDB(): Promise<CountryStatus[]> {
+      return this.countryStatusModel.find().exec();
+    }
     
   }
 
 
-  // async getCityList(): Promise<CityStatus[]> {
-  //   return this.cityStatusModel.find().exec();
-  // }
+ 
 
 
 //   @Cron(CronExpression.EVERY_10_MINUTES)

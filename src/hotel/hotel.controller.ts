@@ -31,4 +31,11 @@ export class HotelController {
    async gethotelDetails(): Promise<any>{   
     return this.hotelService.getHotelDetails();
    }
+
+  // Get the saved TBO hotel details from mongodb
+   @Get('getTBOHotelDetails')
+   async getTBOHotelDetails(): Promise<any>{   
+    return this.hotelService.getTBOHotelDetails();
+   }
+   
 }

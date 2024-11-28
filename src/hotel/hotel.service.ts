@@ -136,4 +136,8 @@ export class HotelService {
         return this.hotelDetailsModel.find().exec();
       }
 
+      async getTBOHotelDetails(): Promise<TBOHotelDetails[]>{
+        return this.tboHotelDetailModel.find().exec();
+      }
+      
 }
