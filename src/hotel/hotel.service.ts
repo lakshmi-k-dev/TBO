@@ -4,6 +4,7 @@ import { HotelCodeDocument} from '../schemas/hotelCode.schema'
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Hotel } from '../schemas/hotelDetail.schema'
+import { TBOHotelDetails } from '../schemas/tboHotelDetail.schema';
 
 @Injectable()  
 export class HotelService {
@@ -12,6 +13,8 @@ export class HotelService {
     private readonly hotelCodeModel: Model<HotelCodeDocument>,
     @InjectModel('HotelDetail')
     private readonly hotelDetailsModel: Model<Hotel>,
+    @InjectModel('TBOHotelDetail')
+    private readonly tboHotelDetailModel: Model<TBOHotelDetails>,
     ){}
 
     private getBasicAuthHeader(username: string, password: string): string {
@@ -34,14 +37,20 @@ export class HotelService {
               },
             },
           );
-          //console.log(response)
+          console.log('ddddddsssss',response.data)
           const { HotelCodes } = response.data;
+          const hotelCodesData = {
+            HotelCodes: HotelCodes.map(code => ({
+              Code: code,   // Set code from the array
+              flag: 0       // Default flag to 0
+            })
+          )};
+          
           const hotelCode = new this.hotelCodeModel({
-            HotelCodes
-            
+            hotelCodesData
           });
-    
-          // Save the document to MongoDB
+         
+          // // Save the document to MongoDB
           return await hotelCode.save();
          
         } catch (error) {
@@ -69,7 +78,6 @@ export class HotelService {
               },
             },
           );
-          console.log('LAKSHMI',response.data)
           const { Status, HotelDetails } = response.data;
           const hotelDetail = new this.hotelDetailsModel({
             Status, 
@@ -81,6 +89,42 @@ export class HotelService {
           return await hotelDetail.save();
         } catch (error) {   
           throw new Error('Failed to create data with Basic Auth');
+        }
+      }
+
+      async TBOHotelCodeList(body: any): Promise<any> {
+        const username = 'TBOStaticAPITest';
+        const password = 'Tbo@11530818';
+    
+        const authHeader = this.getBasicAuthHeader(username, password);
+        const data = {
+          CityCode: body.CityCode,
+          IsDetailedResponse: body.IsDetailedResponse,
+        };
+    
+        try {
+          const response = await axios.post(
+            'http://api.tbotechnology.in/TBOHolidays_HotelAPI/TBOHotelCodeList',
+            data,
+            {
+              headers: {
+                Authorization: authHeader,
+              },
+            },
+          );
+          const { Status, Hotels } = response.data;
+          console.log(response.data)
+          const tbohotelDetails = new this.tboHotelDetailModel({
+            Status, 
+            Hotels
+            
+          });
+          console.log('tbohotelDetails', tbohotelDetails)
+          // Save the document to MongoDB
+          return await tbohotelDetails.save();
+        } catch (error) {  
+          console.log('ERRRRRROR', error) 
+          throw new Error('Failed to insert record');
         }
       }
       

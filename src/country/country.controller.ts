@@ -11,19 +11,31 @@ export class CountryStatusController {
     return this.countryStatusService.fetchAndSaveCountry();
   } 
 
-  @Post('city')
-  async fetchCityList(@Body() body: any): Promise<any> {
-    return this.countryStatusService.fetchAndSaveCity(body);
-  }
-  // Get the saved country list from mongodb
-  @Get('getCountryList')
+    @Post('city')
+    async fetchCityList(@Body() body: any): Promise<any> {
+      return this.countryStatusService.fetchAndSaveCity(body);
+    }
+ // Get the saved country list from mongodb
+  @Get('getCityList')
   async getCountryStatus(): Promise<any> {
-    return this.countryStatusService.getCountryList();
+    return this.countryStatusService.getList();
   }
 
-  // Get the saved city list and city list from mongodb
-  @Get('getCityList')
-  async getCityList() : Promise<any> {
-    return this.countryStatusService.getCityList();
+  //Get the saved city list and city list from mongodb
+  // @Get('getCityList')
+  // async getCityList() : Promise<any> {
+  //   return this.countryStatusService.getCityList();
+  // }
+
+  @Get('getHotelsForCity')
+  async getTBOCityList() : Promise<any> {
+    return this.countryStatusService.getTBOCityList();
   }
+
+  @Get('getTBOHotelCodes')
+  async getTBOHotelCodes() : Promise<any> {
+    return this.countryStatusService.getTBOHotelCodes();
+  }
+
+
 }

@@ -4,6 +4,7 @@ import { Schema, Document } from 'mongoose';
 export const CitySchema = new Schema({
   Code: { type: String, required: true },
   Name: { type: String, required: true },
+  flag: { type: Number, required: true, default: 0 },
 });
 
 // Status schema
@@ -16,6 +17,9 @@ export const StatusSchema = new Schema({
 export const CityStatusSchema = new Schema({
   Status: { type: StatusSchema, required: true },
   CityList: { type: [CitySchema], required: true },
+  CountryCode : { type: String, required: true},
+  CountryName: { type: String, required: true},  
+  flag: { type: Number, required: true, default: 0}, 
 });
 
 export interface CityStatus extends Document {
@@ -23,8 +27,13 @@ export interface CityStatus extends Document {
     Code: number;
     Description: string;
   };
+  CountryCode: string;
+  CountryName: string;
   CityList: {
     Code: string;
     Name: string;
+    flag: number;
   }[];
+  flag: number;
+ 
 }

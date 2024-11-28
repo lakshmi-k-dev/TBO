@@ -15,6 +15,11 @@ export class HotelController {
     return this.hotelService.fetchHotelDetail(body);
   }
 
+  @Post('TBOHotelCodeList')
+  async TBOHotelCodeList(@Body() body: any) : Promise<any> {
+    return this.hotelService.TBOHotelCodeList(body);
+  }
+
    // Get the saved hotel codes from mongodb
    @Get('getHotelCodes')
    async hotelCodes(): Promise<any>{
@@ -23,7 +28,7 @@ export class HotelController {
 
    // Get the saved hotel details from mongodb
    @Get('getHotelDetails')
-   async gethotelDetails(): Promise<any>{
+   async gethotelDetails(): Promise<any>{   
     return this.hotelService.getHotelDetails();
    }
 }

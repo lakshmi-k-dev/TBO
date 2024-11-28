@@ -4,6 +4,7 @@ import { Schema, Document } from 'mongoose';
 export const CountrySchema = new Schema({
   Code: { type: String, required: true },
   Name: { type: String, required: true },
+  flag: { type: Number, required: true, default: 0 }
 });
 
 // Status schema
@@ -26,5 +27,6 @@ export interface CountryStatus extends Document {
   CountryList: {
     Code: string;
     Name: string;
+    flag: number;
   }[];
 }
